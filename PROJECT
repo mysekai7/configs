@@ -1,0 +1,7 @@
+domain: alauda.io
+repo: config
+resources:
+- group: infrastructure
+  kind: Config
+  version: v1alpha1
+version: "2"

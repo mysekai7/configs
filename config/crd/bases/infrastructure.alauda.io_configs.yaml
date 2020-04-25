@@ -1,0 +1,366 @@
+
+---
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.2.2
+  creationTimestamp: null
+  name: configs.infrastructure.alauda.io
+spec:
+  group: infrastructure.alauda.io
+  names:
+    kind: Config
+    listKind: ConfigList
+    plural: configs
+    singular: config
+  scope: namespace
+  validation:
+    openAPIV3Schema:
+      description: Config is the Schema for the configs API
+      properties:
+        apiVersion:
+          description: 'APIVersion defines the versioned schema of this representation
+            of an object. Servers should convert recognized schemas to the latest
+            internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+          type: string
+        kind:
+          description: 'Kind is a string value representing the REST resource this
+            object represents. Servers may infer this from the endpoint the client
+            submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+          type: string
+        metadata:
+          type: object
+        spec:
+          description: ConfigSpec defines the desired state of Config
+          properties:
+            elasticsearch:
+              description: Elasticsearch Config
+              properties:
+                host:
+                  default: http://cpaas-elasticsearch:9200
+                  description: Server address
+                  type: string
+                nodes:
+                  description: Log nodes
+                  items:
+                    type: string
+                  type: array
+                password:
+                  description: Password
+                  properties:
+                    key:
+                      description: The key of the secret to select from.  Must be
+                        a valid secret key.
+                      type: string
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                        TODO: Add other useful fields. apiVersion, kind, uid?'
+                      type: string
+                    optional:
+                      description: Specify whether the Secret or its key must be defined
+                      type: boolean
+                  required:
+                  - key
+                  type: object
+                user:
+                  description: UserName
+                  properties:
+                    key:
+                      description: The key of the secret to select from.  Must be
+                        a valid secret key.
+                      type: string
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                        TODO: Add other useful fields. apiVersion, kind, uid?'
+                      type: string
+                    optional:
+                      description: Specify whether the Secret or its key must be defined
+                      type: boolean
+                  required:
+                  - key
+                  type: object
+              required:
+              - nodes
+              - password
+              - user
+              type: object
+            etcd:
+              description: Etcd Config
+              properties:
+                ectdCaSecret:
+                  description: Etcd Ca Secret
+                  properties:
+                    secretName:
+                      type: string
+                  required:
+                  - secretName
+                  type: object
+                ectdPeerSecret:
+                  description: Etcd Peer secret
+                  properties:
+                    secretName:
+                      type: string
+                  required:
+                  - secretName
+                  type: object
+                servers:
+                  description: Etcd servers
+                  items:
+                    type: string
+                  type: array
+              required:
+              - ectdCaSecret
+              - ectdPeerSecret
+              - servers
+              type: object
+            ext:
+              description: Ext Config
+              type: object
+            global:
+              description: Global configuration
+              properties:
+                apiAddress:
+                  description: Platform api address
+                  type: string
+                defaultAdmin:
+                  default: admin@cpaas.io
+                  description: The platform deploys a management account by default,
+                    and the default email admin@cpaas.io
+                  type: string
+                erebusApiAddress:
+                  description: Platform api gateway address
+                  type: string
+                host:
+                  description: Platform access host address, support domain name or
+                    IP
+                  type: string
+                isOCP:
+                  default: false
+                  description: Whether to deploy on openshift cluster
+                  type: boolean
+                labelBaseDomain:
+                  default: cpaas.io
+                  description: Platform resource instance label field, the default
+                    is cpaas.io
+                  type: string
+                namespace:
+                  default: cpaas-system
+                  description: The namespace deployed by the platform, default cpaas-system
+                  type: string
+                replicas:
+                  default: 2
+                  description: The number of instances of platform common deployment
+                    components, the default is 2
+                  minimum: 0
+                  type: integer
+                scheme:
+                  default: https
+                  description: Platform access protocol, support http or https
+                  enum:
+                  - http
+                  - https
+                  type: string
+                tlsSecret:
+                  description: Tls Secret
+                  properties:
+                    secretName:
+                      type: string
+                  required:
+                  - secretName
+                  type: object
+              required:
+              - apiAddress
+              - erebusApiAddress
+              - host
+              - tlsSecret
+              type: object
+            kafka:
+              description: Kafka Config
+              properties:
+                auth:
+                  default: true
+                  description: Whether to enable authentication
+                  type: boolean
+                host:
+                  default: cpaas-kafka:9092
+                  description: Server address
+                  type: string
+                kafka_password:
+                  description: SecretKeySelector selects a key of a Secret.
+                  properties:
+                    key:
+                      description: The key of the secret to select from.  Must be
+                        a valid secret key.
+                      type: string
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                        TODO: Add other useful fields. apiVersion, kind, uid?'
+                      type: string
+                    optional:
+                      description: Specify whether the Secret or its key must be defined
+                      type: boolean
+                  required:
+                  - key
+                  type: object
+                kafka_user:
+                  description: SecretKeySelector selects a key of a Secret.
+                  properties:
+                    key:
+                      description: The key of the secret to select from.  Must be
+                        a valid secret key.
+                      type: string
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                        TODO: Add other useful fields. apiVersion, kind, uid?'
+                      type: string
+                    optional:
+                      description: Specify whether the Secret or its key must be defined
+                      type: boolean
+                  required:
+                  - key
+                  type: object
+                zk_acl_password:
+                  description: SecretKeySelector selects a key of a Secret.
+                  properties:
+                    key:
+                      description: The key of the secret to select from.  Must be
+                        a valid secret key.
+                      type: string
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                        TODO: Add other useful fields. apiVersion, kind, uid?'
+                      type: string
+                    optional:
+                      description: Specify whether the Secret or its key must be defined
+                      type: boolean
+                  required:
+                  - key
+                  type: object
+                zk_password:
+                  description: SecretKeySelector selects a key of a Secret.
+                  properties:
+                    key:
+                      description: The key of the secret to select from.  Must be
+                        a valid secret key.
+                      type: string
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                        TODO: Add other useful fields. apiVersion, kind, uid?'
+                      type: string
+                    optional:
+                      description: Specify whether the Secret or its key must be defined
+                      type: boolean
+                  required:
+                  - key
+                  type: object
+                zk_user:
+                  description: SecretKeySelector selects a key of a Secret.
+                  properties:
+                    key:
+                      description: The key of the secret to select from.  Must be
+                        a valid secret key.
+                      type: string
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                        TODO: Add other useful fields. apiVersion, kind, uid?'
+                      type: string
+                    optional:
+                      description: Specify whether the Secret or its key must be defined
+                      type: boolean
+                  required:
+                  - key
+                  type: object
+              required:
+              - kafka_password
+              - kafka_user
+              - zk_acl_password
+              - zk_password
+              - zk_user
+              type: object
+            oidc:
+              description: OIDC Config
+              properties:
+                clientID:
+                  default: alauda-auth
+                  description: OIDC Client ID
+                  type: string
+                clientSecret:
+                  default: ZXhhbXBsZS1hcHAtc2VjcmV0
+                  description: OIDC Client Secret
+                  type: string
+                issuer:
+                  description: OIDC server address
+                  type: string
+                responseType:
+                  default: code
+                  description: OIDC Response Type
+                  type: string
+                scopes:
+                  default: openid,profile,email,groups,ext
+                  description: OIDC Scopes
+                  type: string
+              required:
+              - issuer
+              type: object
+            products:
+              description: Deployed products
+              items:
+                description: Product
+                properties:
+                  name:
+                    type: string
+                  version:
+                    type: string
+                required:
+                - name
+                - version
+                type: object
+              type: array
+            release:
+              description: Release verison
+              type: string
+            repositories:
+              description: Repositories Config
+              items:
+                description: Repository Config
+                properties:
+                  string:
+                    description: Repository url
+                    type: string
+                  type:
+                    description: Repository type
+                    enum:
+                    - chart
+                    - image
+                    - yum
+                    - apt
+                    type: string
+                required:
+                - string
+                - type
+                type: object
+              type: array
+          required:
+          - etcd
+          - global
+          - oidc
+          - products
+          - release
+          - repositories
+          type: object
+        status:
+          description: ConfigStatus defines the observed state of Config
+          type: object
+      type: object
+  version: v1alpha1
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
