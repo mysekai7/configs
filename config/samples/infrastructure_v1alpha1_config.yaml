@@ -2,6 +2,113 @@ apiVersion: infrastructure.alauda.io/v1alpha1
 kind: Config
 metadata:
   name: config-sample
+  namespace: alauda-system
 spec:
-  # Add fields here
-  foo: bar
+  # Release verison
+  release: v2.9.0
+
+  # Deployed products
+  products:
+  - name: platform
+    version: v2.9.0
+  - name: acp
+    version: v2.9.0
+  - name: asm
+    version: v2.9.0
+  - name: devops
+    version: v2.9.0
+
+  # Global configuration
+  global:
+    # Platform access protocol, support http or https
+    scheme: http
+    # Platform access host address, support domain name or IP
+    host: example.com
+    # The namespace deployed by the platform, default cpaas-system
+    namespace: cpaas-system
+    # Platform resource instance label field, the default is cpaas.io
+    labelBaseDomain: cpaas.io
+    # The platform deploys a management account by default, and the default email admin@cpaas.io
+    defaultAdmin: admin@cpaas.io
+    # The number of instances of platform common deployment components, the default is 2
+    replicas: 2
+    # Platform api gateway address
+    erebusApiAddress: http://example.com
+    # Platform api address
+    apiAddress: http://example.com
+    # Whether to deploy on openshift cluster
+    isOCP: false
+    # Tls Secret
+    tlsSecret:
+      secretName: dex.tls
+
+  # OIDC Config
+  oidc:
+    issuer: https://example.com/dex
+    clientID: alauda-auth
+    clientSecret: ZXhhbXBsZS1hcHAtc2VjcmV0
+    responseType: code
+    scopes: "openid,profile,email,groups,ext"
+
+  # Etcd Config
+  etcd:
+    servers:
+      - https://etcd.kube-system:2379
+    ectdPeerSecret:
+      secretName: etcd-peer
+    ectdCaSecret:
+      secretName: etcd-ca
+
+  # Elasticsearch Config
+  elasticsearch:
+    host: http://cpaas-elasticsearch:9200
+    nodes:
+      - 192.168.16.48
+      - 192.168.23.1
+      - 192.168.23.2
+    user:
+      localObjectReference:
+        name: acp-config-secret
+      key: ES_USER
+    password:
+      localObjectReference:
+        name: acp-config-secret
+      key: ES_PASSWORD
+
+  # Kafka Config
+  kafka:
+    auth: true
+    host: cpaas-kafka:9092
+    kafka_user:
+      localObjectReference:
+        name: acp-config-secret
+      key: ZK_USER
+    kafka_password:
+      localObjectReference:
+        name: acp-config-secret
+      key: ZK_PASSWORD
+    zk_user:
+      localObjectReference:
+        name: acp-config-secret
+      key: ZK_USER
+    zk_password:
+      localObjectReference:
+        name: acp-config-secret
+      key: ZK_PASSWORD
+    zk_acl_password:
+      localObjectReference:
+        name: acp-config-secret
+      key: ZK_ACL_PASSWORD
+
+  # Repositories Config
+  repositories:
+  - type: chart
+    url: http://xxx.com
+  - type: image
+    url: index.alauda.cn
+
+  # Ext Config
+  ext:
+    test: test
+
+

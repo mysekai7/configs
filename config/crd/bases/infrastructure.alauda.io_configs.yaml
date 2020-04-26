@@ -322,9 +322,6 @@ spec:
               items:
                 description: Repository Config
                 properties:
-                  string:
-                    description: Repository url
-                    type: string
                   type:
                     description: Repository type
                     enum:
@@ -333,9 +330,12 @@ spec:
                     - yum
                     - apt
                     type: string
+                  url:
+                    description: Repository url
+                    type: string
                 required:
-                - string
                 - type
+                - url
                 type: object
               type: array
           required:

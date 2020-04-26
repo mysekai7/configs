@@ -179,7 +179,7 @@ type Repository struct {
 	// +kubebuilder:validation:Enum:={"chart","image","yum","apt"}
 	Type string `json:"type"`
 	// Repository url
-	Url string `json:"string"`
+	Url string `json:"url"`
 }
 
 // ConfigSpec defines the desired state of Config
