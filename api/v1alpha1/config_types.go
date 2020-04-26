@@ -19,7 +19,6 @@ package v1alpha1
 import (
 	"encoding/json"
 
-	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -28,7 +27,11 @@ import (
 
 // Product
 type Product struct {
-	Name    string `json:"name"`
+	// Product name
+	// +kubebuilder:validation:MinLength:=1
+	Name string `json:"name"`
+	// Product version
+	// +kubebuilder:validation:MinLength:=1
 	Version string `json:"version"`
 }
 
@@ -39,15 +42,19 @@ type GlobalConfig struct {
 	Scheme string `json:"scheme,omitempty"`
 
 	// Platform access host address, support domain name or IP
+	// +kubebuilder:validation:MinLength:=1
 	Host string `json:"host"`
 
 	// The namespace deployed by the platform, default cpaas-system
+	// +kubebuilder:validation:MinLength:=1
 	Namespace string `json:"namespace,omitempty"`
 
 	// Platform resource instance label field, the default is cpaas.io
+	// +kubebuilder:validation:MinLength:=1
 	LabelBaseDomain string `json:"labelBaseDomain"`
 
 	// The platform deploys a management account by default, and the default email admin@cpaas.io
+	// +kubebuilder:validation:MinLength:=1
 	DefaultAdmin string `json:"defaultAdmin"`
 
 	// The number of instances of platform common deployment components, the default is 2
@@ -55,9 +62,11 @@ type GlobalConfig struct {
 	Replicas int `json:"replicas"`
 
 	// Platform api gateway address
+	// +kubebuilder:validation:MinLength:=1
 	ErebusApiAddress string `json:"erebusApiAddress"`
 
 	// Platform api address
+	// +kubebuilder:validation:MinLength:=1
 	ApiAddress string `json:"apiAddress"`
 
 	// Whether to deploy on openshift cluster
@@ -68,7 +77,22 @@ type GlobalConfig struct {
 }
 
 type Certificate struct {
+	// Secret name
+	// +kubebuilder:validation:MinLength:=1
 	SecretName string `json:"secretName"`
+}
+
+type SecretKeyRef struct {
+	// Reference secret name
+	// +kubebuilder:validation:MinLength:=1
+	Name string `json:"name"`
+	// Reference secret key
+	// +kubebuilder:validation:MinLength:=1
+	Key string `json:"key"`
+}
+
+type SecretValue struct {
+	SecretKeyRef SecretKeyRef `json:"secretKeyRef"`
 }
 
 type ExtValues struct {
@@ -118,23 +142,29 @@ func (in *ExtValues) DeepCopyInto(out *ExtValues) {
 
 type OidcConfig struct {
 	// OIDC server address
+	// +kubebuilder:validation:MinLength:=1
 	Issuer string `json:"issuer"`
 
 	// OIDC Client ID
+	// +kubebuilder:validation:MinLength:=1
 	ClientID string `json:"clientID"`
 
 	// OIDC Client Secret
+	// +kubebuilder:validation:MinLength:=1
 	ClientSecret string `json:"clientSecret"`
 
 	// OIDC Response Type
+	// +kubebuilder:validation:Enum={"code","token","id_token"}
 	ResponseType string `json:"responseType"`
 
 	// OIDC Scopes
+	// +kubebuilder:validation:MinLength:=1
 	Scopes string `json:"scopes"`
 }
 
 type EtcdConfig struct {
 	// Etcd servers
+	// +kubebuilder:validation:MinItems:=1
 	Servers []string `json:"servers"`
 
 	// Etcd Peer secret
@@ -152,10 +182,10 @@ type ElasticsearchConfig struct {
 	Nodes []string `json:"nodes"`
 
 	// UserName
-	User v1.SecretKeySelector `json:"user"`
+	User SecretValue `json:"user"`
 
 	// Password
-	Password v1.SecretKeySelector `json:"password"`
+	Password SecretValue `json:"password"`
 }
 
 type KafkaConfig struct {
@@ -165,12 +195,12 @@ type KafkaConfig struct {
 	// Server address
 	Host string `json:"host"`
 
-	KafkaUser     v1.SecretKeySelector `json:"kafka_user"`
-	KafkaPassword v1.SecretKeySelector `json:"kafka_password"`
+	KafkaUser     SecretValue `json:"kafka_user"`
+	KafkaPassword SecretValue `json:"kafka_password"`
 
-	ZKUser        v1.SecretKeySelector `json:"zk_user"`
-	ZKPassword    v1.SecretKeySelector `json:"zk_password"`
-	ZKAclPassword v1.SecretKeySelector `json:"zk_acl_password"`
+	ZKUser        SecretValue `json:"zk_user"`
+	ZKPassword    SecretValue `json:"zk_password"`
+	ZKAclPassword SecretValue `json:"zk_acl_password"`
 }
 
 // Repository Config
@@ -179,15 +209,18 @@ type Repository struct {
 	// +kubebuilder:validation:Enum:={"chart","image","yum","apt"}
 	Type string `json:"type"`
 	// Repository url
+	// +kubebuilder:validation:MinLength:=1
 	Url string `json:"url"`
 }
 
 // ConfigSpec defines the desired state of Config
 type ConfigSpec struct {
 	// Release verison
+	// +kubebuilder:validation:MinLength:=1
 	Release string `json:"release"`
 
 	// Deployed products
+	// +kubebuilder:validation:MinItems:=1
 	Products []Product `json:"products"`
 
 	// Global configuration
@@ -206,6 +239,7 @@ type ConfigSpec struct {
 	Kafka KafkaConfig `json:"kafka,omitempty"`
 
 	// Repositories Config
+	// +kubebuilder:validation:MinItems:=1
 	Repositories []Repository `json:"repositories"`
 
 	// Ext Config

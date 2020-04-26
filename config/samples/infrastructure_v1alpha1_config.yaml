@@ -48,7 +48,7 @@ spec:
     clientID: alauda-auth
     clientSecret: ZXhhbXBsZS1hcHAtc2VjcmV0
     responseType: code
-    scopes: "openid,profile,email,groups,ext"
+    scopes: openid,profile,email,groups,ext
 
   # Etcd Config
   etcd:
@@ -63,42 +63,42 @@ spec:
   elasticsearch:
     host: http://cpaas-elasticsearch:9200
     nodes:
-      - 192.168.16.48
-      - 192.168.23.1
-      - 192.168.23.2
+    - 192.168.16.48
+    - 192.168.23.1
+    - 192.168.23.2
     user:
-      localObjectReference:
+      secretKeyRef:
         name: acp-config-secret
-      key: ES_USER
+        key: ES_USER
     password:
-      localObjectReference:
+      secretKeyRef:
         name: acp-config-secret
-      key: ES_PASSWORD
+        key: ES_PASSWORD
 
   # Kafka Config
   kafka:
     auth: true
     host: cpaas-kafka:9092
     kafka_user:
-      localObjectReference:
+      secretKeyRef:
         name: acp-config-secret
-      key: ZK_USER
+        key: ZK_USER
     kafka_password:
-      localObjectReference:
+      secretKeyRef:
         name: acp-config-secret
-      key: ZK_PASSWORD
+        key: ZK_PASSWORD
     zk_user:
-      localObjectReference:
+      secretKeyRef:
         name: acp-config-secret
-      key: ZK_USER
+        key: ZK_USER
     zk_password:
-      localObjectReference:
+      secretKeyRef:
         name: acp-config-secret
-      key: ZK_PASSWORD
+        key: ZK_PASSWORD
     zk_acl_password:
-      localObjectReference:
+      secretKeyRef:
         name: acp-config-secret
-      key: ZK_ACL_PASSWORD
+        key: ZK_ACL_PASSWORD
 
   # Repositories Config
   repositories:

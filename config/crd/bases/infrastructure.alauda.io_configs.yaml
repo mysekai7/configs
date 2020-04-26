@@ -48,36 +48,42 @@ spec:
                 password:
                   description: Password
                   properties:
-                    key:
-                      description: The key of the secret to select from.  Must be
-                        a valid secret key.
-                      type: string
-                    name:
-                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                        TODO: Add other useful fields. apiVersion, kind, uid?'
-                      type: string
-                    optional:
-                      description: Specify whether the Secret or its key must be defined
-                      type: boolean
+                    secretKeyRef:
+                      properties:
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
                   required:
-                  - key
+                  - secretKeyRef
                   type: object
                 user:
                   description: UserName
                   properties:
-                    key:
-                      description: The key of the secret to select from.  Must be
-                        a valid secret key.
-                      type: string
-                    name:
-                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                        TODO: Add other useful fields. apiVersion, kind, uid?'
-                      type: string
-                    optional:
-                      description: Specify whether the Secret or its key must be defined
-                      type: boolean
+                    secretKeyRef:
+                      properties:
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
                   required:
-                  - key
+                  - secretKeyRef
                   type: object
               required:
               - host
@@ -92,6 +98,8 @@ spec:
                   description: Etcd Ca Secret
                   properties:
                     secretName:
+                      description: Secret name
+                      minLength: 1
                       type: string
                   required:
                   - secretName
@@ -100,6 +108,8 @@ spec:
                   description: Etcd Peer secret
                   properties:
                     secretName:
+                      description: Secret name
+                      minLength: 1
                       type: string
                   required:
                   - secretName
@@ -108,6 +118,7 @@ spec:
                   description: Etcd servers
                   items:
                     type: string
+                  minItems: 1
                   type: array
               required:
               - ectdCaSecret
@@ -122,17 +133,21 @@ spec:
               properties:
                 apiAddress:
                   description: Platform api address
+                  minLength: 1
                   type: string
                 defaultAdmin:
                   description: The platform deploys a management account by default,
                     and the default email admin@cpaas.io
+                  minLength: 1
                   type: string
                 erebusApiAddress:
                   description: Platform api gateway address
+                  minLength: 1
                   type: string
                 host:
                   description: Platform access host address, support domain name or
                     IP
+                  minLength: 1
                   type: string
                 isOCP:
                   description: Whether to deploy on openshift cluster
@@ -140,9 +155,11 @@ spec:
                 labelBaseDomain:
                   description: Platform resource instance label field, the default
                     is cpaas.io
+                  minLength: 1
                   type: string
                 namespace:
                   description: The namespace deployed by the platform, default cpaas-system
+                  minLength: 1
                   type: string
                 replicas:
                   description: The number of instances of platform common deployment
@@ -159,6 +176,8 @@ spec:
                   description: Tls Secret
                   properties:
                     secretName:
+                      description: Secret name
+                      minLength: 1
                       type: string
                   required:
                   - secretName
@@ -182,89 +201,99 @@ spec:
                   description: Server address
                   type: string
                 kafka_password:
-                  description: SecretKeySelector selects a key of a Secret.
                   properties:
-                    key:
-                      description: The key of the secret to select from.  Must be
-                        a valid secret key.
-                      type: string
-                    name:
-                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                        TODO: Add other useful fields. apiVersion, kind, uid?'
-                      type: string
-                    optional:
-                      description: Specify whether the Secret or its key must be defined
-                      type: boolean
+                    secretKeyRef:
+                      properties:
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
                   required:
-                  - key
+                  - secretKeyRef
                   type: object
                 kafka_user:
-                  description: SecretKeySelector selects a key of a Secret.
                   properties:
-                    key:
-                      description: The key of the secret to select from.  Must be
-                        a valid secret key.
-                      type: string
-                    name:
-                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                        TODO: Add other useful fields. apiVersion, kind, uid?'
-                      type: string
-                    optional:
-                      description: Specify whether the Secret or its key must be defined
-                      type: boolean
+                    secretKeyRef:
+                      properties:
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
                   required:
-                  - key
+                  - secretKeyRef
                   type: object
                 zk_acl_password:
-                  description: SecretKeySelector selects a key of a Secret.
                   properties:
-                    key:
-                      description: The key of the secret to select from.  Must be
-                        a valid secret key.
-                      type: string
-                    name:
-                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                        TODO: Add other useful fields. apiVersion, kind, uid?'
-                      type: string
-                    optional:
-                      description: Specify whether the Secret or its key must be defined
-                      type: boolean
+                    secretKeyRef:
+                      properties:
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
                   required:
-                  - key
+                  - secretKeyRef
                   type: object
                 zk_password:
-                  description: SecretKeySelector selects a key of a Secret.
                   properties:
-                    key:
-                      description: The key of the secret to select from.  Must be
-                        a valid secret key.
-                      type: string
-                    name:
-                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                        TODO: Add other useful fields. apiVersion, kind, uid?'
-                      type: string
-                    optional:
-                      description: Specify whether the Secret or its key must be defined
-                      type: boolean
+                    secretKeyRef:
+                      properties:
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
                   required:
-                  - key
+                  - secretKeyRef
                   type: object
                 zk_user:
-                  description: SecretKeySelector selects a key of a Secret.
                   properties:
-                    key:
-                      description: The key of the secret to select from.  Must be
-                        a valid secret key.
-                      type: string
-                    name:
-                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
-                        TODO: Add other useful fields. apiVersion, kind, uid?'
-                      type: string
-                    optional:
-                      description: Specify whether the Secret or its key must be defined
-                      type: boolean
+                    secretKeyRef:
+                      properties:
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
                   required:
-                  - key
+                  - secretKeyRef
                   type: object
               required:
               - auth
@@ -280,18 +309,26 @@ spec:
               properties:
                 clientID:
                   description: OIDC Client ID
+                  minLength: 1
                   type: string
                 clientSecret:
                   description: OIDC Client Secret
+                  minLength: 1
                   type: string
                 issuer:
                   description: OIDC server address
+                  minLength: 1
                   type: string
                 responseType:
                   description: OIDC Response Type
+                  enum:
+                  - code
+                  - token
+                  - id_token
                   type: string
                 scopes:
                   description: OIDC Scopes
+                  minLength: 1
                   type: string
               required:
               - clientID
@@ -306,16 +343,22 @@ spec:
                 description: Product
                 properties:
                   name:
+                    description: Product name
+                    minLength: 1
                     type: string
                   version:
+                    description: Product version
+                    minLength: 1
                     type: string
                 required:
                 - name
                 - version
                 type: object
+              minItems: 1
               type: array
             release:
               description: Release verison
+              minLength: 1
               type: string
             repositories:
               description: Repositories Config
@@ -332,11 +375,13 @@ spec:
                     type: string
                   url:
                     description: Repository url
+                    minLength: 1
                     type: string
                 required:
                 - type
                 - url
                 type: object
+              minItems: 1
               type: array
           required:
           - etcd
