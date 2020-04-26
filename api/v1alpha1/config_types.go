@@ -36,28 +36,23 @@ type Product struct {
 type GlobalConfig struct {
 	// Platform access protocol, support http or https
 	// +kubebuilder:validation:Enum:={"http","https"}
-	// +kubebuilder:default:=https
 	Scheme string `json:"scheme,omitempty"`
 
 	// Platform access host address, support domain name or IP
 	Host string `json:"host"`
 
 	// The namespace deployed by the platform, default cpaas-system
-	// +kubebuilder:default:=cpaas-system
 	Namespace string `json:"namespace,omitempty"`
 
 	// Platform resource instance label field, the default is cpaas.io
-	// +kubebuilder:default:=cpaas.io
-	LabelBaseDomain string `json:"labelBaseDomain,omitempty"`
+	LabelBaseDomain string `json:"labelBaseDomain"`
 
 	// The platform deploys a management account by default, and the default email admin@cpaas.io
-	// +kubebuilder:default:=admin@cpaas.io
-	DefaultAdmin string `json:"defaultAdmin,omitempty"`
+	DefaultAdmin string `json:"defaultAdmin"`
 
 	// The number of instances of platform common deployment components, the default is 2
 	// +kubebuilder:validation:Minimum:=0
-	// +kubebuilder:default:=2
-	Replicas int `json:"replicas,omitempty"`
+	Replicas int `json:"replicas"`
 
 	// Platform api gateway address
 	ErebusApiAddress string `json:"erebusApiAddress"`
@@ -66,7 +61,6 @@ type GlobalConfig struct {
 	ApiAddress string `json:"apiAddress"`
 
 	// Whether to deploy on openshift cluster
-	// +kubebuilder:default:=false
 	IsOCP bool `json:"isOCP,omitempty"`
 
 	// Tls Secret
@@ -127,20 +121,16 @@ type OidcConfig struct {
 	Issuer string `json:"issuer"`
 
 	// OIDC Client ID
-	// +kubebuilder:default:="alauda-auth"
-	ClientID string `json:"clientID,omitempty"`
+	ClientID string `json:"clientID"`
 
 	// OIDC Client Secret
-	// +kubebuilder:default:=ZXhhbXBsZS1hcHAtc2VjcmV0
-	ClientSecret string `json:"clientSecret,omitempty"`
+	ClientSecret string `json:"clientSecret"`
 
 	// OIDC Response Type
-	// +kubebuilder:default:=code
-	ResponseType string `json:"responseType,omitempty"`
+	ResponseType string `json:"responseType"`
 
 	// OIDC Scopes
-	// +kubebuilder:default:="openid,profile,email,groups,ext"
-	Scopes string `json:"scopes,omitempty"`
+	Scopes string `json:"scopes"`
 }
 
 type EtcdConfig struct {
@@ -156,8 +146,7 @@ type EtcdConfig struct {
 
 type ElasticsearchConfig struct {
 	// Server address
-	// +kubebuilder:default:="http://cpaas-elasticsearch:9200"
-	Host string `json:"host,omitempty"`
+	Host string `json:"host"`
 
 	// Log nodes
 	Nodes []string `json:"nodes"`
@@ -171,12 +160,10 @@ type ElasticsearchConfig struct {
 
 type KafkaConfig struct {
 	// Whether to enable authentication
-	// +kubebuilder:default:=true
-	Auth bool `json:"auth,omitempty"`
+	Auth bool `json:"auth"`
 
 	// Server address
-	// +kubebuilder:default:="cpaas-kafka:9092"
-	Host string `json:"host,omitempty"`
+	Host string `json:"host"`
 
 	KafkaUser     v1.SecretKeySelector `json:"kafka_user"`
 	KafkaPassword v1.SecretKeySelector `json:"kafka_password"`
@@ -206,9 +193,6 @@ type ConfigSpec struct {
 	// Global configuration
 	Global GlobalConfig `json:"global"`
 
-	//// Certificate
-	//Certificates []Certificate `json:"certificates"`
-
 	// OIDC Config
 	Oidc OidcConfig `json:"oidc"`
 
@@ -235,7 +219,7 @@ type ConfigStatus struct {
 }
 
 // +kubebuilder:object:root=true
-// +kubebuilder:resource:scope=namespace
+// +kubebuilder:resource:scope=Namespaced
 
 // Config is the Schema for the configs API
 type Config struct {

@@ -14,7 +14,7 @@ spec:
     listKind: ConfigList
     plural: configs
     singular: config
-  scope: namespace
+  scope: Namespaced
   validation:
     openAPIV3Schema:
       description: Config is the Schema for the configs API
@@ -38,7 +38,6 @@ spec:
               description: Elasticsearch Config
               properties:
                 host:
-                  default: http://cpaas-elasticsearch:9200
                   description: Server address
                   type: string
                 nodes:
@@ -81,6 +80,7 @@ spec:
                   - key
                   type: object
               required:
+              - host
               - nodes
               - password
               - user
@@ -124,7 +124,6 @@ spec:
                   description: Platform api address
                   type: string
                 defaultAdmin:
-                  default: admin@cpaas.io
                   description: The platform deploys a management account by default,
                     and the default email admin@cpaas.io
                   type: string
@@ -136,26 +135,21 @@ spec:
                     IP
                   type: string
                 isOCP:
-                  default: false
                   description: Whether to deploy on openshift cluster
                   type: boolean
                 labelBaseDomain:
-                  default: cpaas.io
                   description: Platform resource instance label field, the default
                     is cpaas.io
                   type: string
                 namespace:
-                  default: cpaas-system
                   description: The namespace deployed by the platform, default cpaas-system
                   type: string
                 replicas:
-                  default: 2
                   description: The number of instances of platform common deployment
                     components, the default is 2
                   minimum: 0
                   type: integer
                 scheme:
-                  default: https
                   description: Platform access protocol, support http or https
                   enum:
                   - http
@@ -171,19 +165,20 @@ spec:
                   type: object
               required:
               - apiAddress
+              - defaultAdmin
               - erebusApiAddress
               - host
+              - labelBaseDomain
+              - replicas
               - tlsSecret
               type: object
             kafka:
               description: Kafka Config
               properties:
                 auth:
-                  default: true
                   description: Whether to enable authentication
                   type: boolean
                 host:
-                  default: cpaas-kafka:9092
                   description: Server address
                   type: string
                 kafka_password:
@@ -272,6 +267,8 @@ spec:
                   - key
                   type: object
               required:
+              - auth
+              - host
               - kafka_password
               - kafka_user
               - zk_acl_password
@@ -282,26 +279,26 @@ spec:
               description: OIDC Config
               properties:
                 clientID:
-                  default: alauda-auth
                   description: OIDC Client ID
                   type: string
                 clientSecret:
-                  default: ZXhhbXBsZS1hcHAtc2VjcmV0
                   description: OIDC Client Secret
                   type: string
                 issuer:
                   description: OIDC server address
                   type: string
                 responseType:
-                  default: code
                   description: OIDC Response Type
                   type: string
                 scopes:
-                  default: openid,profile,email,groups,ext
                   description: OIDC Scopes
                   type: string
               required:
+              - clientID
+              - clientSecret
               - issuer
+              - responseType
+              - scopes
               type: object
             products:
               description: Deployed products
