@@ -1,7 +1,7 @@
 apiVersion: infrastructure.alauda.io/v1alpha1
 kind: Config
 metadata:
-  name: config-sample
+  name: config-sample-ref
 spec:
   # Release verison
   release: v2.9.0
@@ -39,9 +39,9 @@ spec:
     isOCP: false
     # Tls Secret
     tlsSecret:
-      secretSource:
-        tls.crt: Cg==
-        tls.key: Cg==
+      secretRef:
+        secretName: dex.tls
+        hash: xxxxxxx
 
   # OIDC Config
   oidc:
@@ -56,13 +56,13 @@ spec:
     servers:
       - https://etcd.kube-system:2379
     ectdPeerSecret:
-      secretSource:
-        tls.crt: Cg==
-        tls.key: Cg==
+      secretRef:
+        secretName: etcd-peer
+        hash: xxxxx
     ectdCaSecret:
-      secretSource:
-        tls.crt: Cg==
-        tls.key: Cg==
+      secretRef:
+        secretName: etcd-ca
+        hash: xxxxxs
 
   # Elasticsearch Config
   elasticsearch:
@@ -71,18 +71,46 @@ spec:
     - 192.168.16.48
     - 192.168.23.1
     - 192.168.23.2
-    username: YWxhdWRhZXM=
-    password: WU9kUHNrUnJGb25wTVJ6
+    user:
+      secretKeyRef:
+        name: acp-config-secret
+        key: ES_USER
+        hash: xxxxx
+    password:
+      secretKeyRef:
+        name: acp-config-secret
+        key: ES_PASSWORD
+        hash: xxxxx
 
   # Kafka Config
   kafka:
     auth: true
     host: cpaas-kafka:9092
-    kafka_user: aW1yaWdjemNtbw==
-    kafka_password: dUR2ZVB1bUVFQ1lETXJD
-    zk_user: aW1yaWdjemNtbw==
-    zk_password: dUR2ZVB1bUVFQ1lETXJD
-    zk_acl_password: dUR2ZVB1bUVFQ1lETXJD
+    kafka_user:
+      secretKeyRef:
+        name: acp-config-secret
+        key: KAFKA_USER
+        hash: xxxxx
+    kafka_password:
+      secretKeyRef:
+        name: acp-config-secret
+        key: KAFKA_PASSWORD
+        hash: xxxxx
+    zk_user:
+      secretKeyRef:
+        name: acp-config-secret
+        key: ZK_USER
+        hash: xxxxx
+    zk_password:
+      secretKeyRef:
+        name: acp-config-secret
+        key: ZK_PASSWORD
+        hash: xxxxx
+    zk_acl_password:
+      secretKeyRef:
+        name: acp-config-secret
+        key: ZK_ACL_PASSWORD
+        hash: xxxxx
 
   # Repositories Config
   repositories:

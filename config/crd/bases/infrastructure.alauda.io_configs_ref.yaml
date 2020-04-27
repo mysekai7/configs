@@ -47,10 +47,52 @@ spec:
                   type: array
                 password:
                   description: Password
-                  type: string
+                  properties:
+                    secretKeyRef:
+                      properties:
+                        hash:
+                          description: hash value
+                          minLength: 1
+                          type: string
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
+                  required:
+                  - secretKeyRef
+                  type: object
                 username:
                   description: Uername
-                  type: string
+                  properties:
+                    secretKeyRef:
+                      properties:
+                        hash:
+                          description: hash value
+                          minLength: 1
+                          type: string
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
+                  required:
+                  - secretKeyRef
+                  type: object
               required:
               - host
               - nodes
@@ -61,36 +103,42 @@ spec:
                 ectdCaSecret:
                   description: Etcd Ca Secret
                   properties:
-                    secretSource:
-                      description: '*SecretRef `json:"secretRef"`'
+                    secretRef:
                       properties:
-                        tls.crt:
+                        hash:
+                          description: Hash value
+                          minLength: 1
                           type: string
-                        tls.key:
+                        secretName:
+                          description: Secret name
+                          minLength: 1
                           type: string
                       required:
-                      - tls.crt
-                      - tls.key
+                      - hash
+                      - secretName
                       type: object
                   required:
-                  - secretSource
+                  - secretRef
                   type: object
                 ectdPeerSecret:
                   description: Etcd Peer secret
                   properties:
-                    secretSource:
-                      description: '*SecretRef `json:"secretRef"`'
+                    secretRef:
                       properties:
-                        tls.crt:
+                        hash:
+                          description: Hash value
+                          minLength: 1
                           type: string
-                        tls.key:
+                        secretName:
+                          description: Secret name
+                          minLength: 1
                           type: string
                       required:
-                      - tls.crt
-                      - tls.key
+                      - hash
+                      - secretName
                       type: object
                   required:
-                  - secretSource
+                  - secretRef
                   type: object
                 servers:
                   description: Etcd servers
@@ -153,19 +201,22 @@ spec:
                 tlsSecret:
                   description: Tls Secret
                   properties:
-                    secretSource:
-                      description: '*SecretRef `json:"secretRef"`'
+                    secretRef:
                       properties:
-                        tls.crt:
+                        hash:
+                          description: Hash value
+                          minLength: 1
                           type: string
-                        tls.key:
+                        secretName:
+                          description: Secret name
+                          minLength: 1
                           type: string
                       required:
-                      - tls.crt
-                      - tls.key
+                      - hash
+                      - secretName
                       type: object
                   required:
-                  - secretSource
+                  - secretRef
                   type: object
               required:
               - apiAddress
@@ -186,15 +237,120 @@ spec:
                   description: Server address
                   type: string
                 kafka_password:
-                  type: string
+                  properties:
+                    secretKeyRef:
+                      properties:
+                        hash:
+                          description: hash value
+                          minLength: 1
+                          type: string
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
+                  required:
+                  - secretKeyRef
+                  type: object
                 kafka_user:
-                  type: string
+                  properties:
+                    secretKeyRef:
+                      properties:
+                        hash:
+                          description: hash value
+                          minLength: 1
+                          type: string
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
+                  required:
+                  - secretKeyRef
+                  type: object
                 zk_acl_password:
-                  type: string
+                  properties:
+                    secretKeyRef:
+                      properties:
+                        hash:
+                          description: hash value
+                          minLength: 1
+                          type: string
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
+                  required:
+                  - secretKeyRef
+                  type: object
                 zk_password:
-                  type: string
+                  properties:
+                    secretKeyRef:
+                      properties:
+                        hash:
+                          description: hash value
+                          minLength: 1
+                          type: string
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
+                  required:
+                  - secretKeyRef
+                  type: object
                 zk_user:
-                  type: string
+                  properties:
+                    secretKeyRef:
+                      properties:
+                        hash:
+                          description: hash value
+                          minLength: 1
+                          type: string
+                        key:
+                          description: Reference secret key
+                          minLength: 1
+                          type: string
+                        name:
+                          description: Reference secret name
+                          minLength: 1
+                          type: string
+                      required:
+                      - key
+                      - name
+                      type: object
+                  required:
+                  - secretKeyRef
+                  type: object
               required:
               - auth
               - host

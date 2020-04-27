@@ -76,10 +76,30 @@ type GlobalConfig struct {
 	TlsSecret Certificate `json:"tlsSecret"`
 }
 
-type Certificate struct {
+type SecretRef struct {
 	// Secret name
 	// +kubebuilder:validation:MinLength:=1
 	SecretName string `json:"secretName"`
+
+	// Hash value
+	// +kubebuilder:validation:MinLength:=1
+	Hash string `json:"hash"`
+}
+
+type SecretSource struct {
+	Crt string `json:"tls.crt"`
+	Key string `json:"tls.key"`
+}
+
+type SecretRefSource struct {
+	Data      SecretSource `json:"data"`
+	secretRef SecretRef    `json:"secretRef"`
+}
+
+type Certificate struct {
+	//*SecretRef `json:"secretRef"`
+	*SecretSource `json:"secretSource"`
+	//*SecretRefSource `json:"secretRefSource"`
 }
 
 type SecretKeyRef struct {
@@ -89,10 +109,20 @@ type SecretKeyRef struct {
 	// Reference secret key
 	// +kubebuilder:validation:MinLength:=1
 	Key string `json:"key"`
+	// hash value
+	// +kubebuilder:validation:MinLength:=1
+	Hash string `json:"hash,omitempty"`
+}
+
+type SecretKeyRefSource struct {
+	Value     string       `json:"value"`
+	secretRef SecretKeyRef `json:"secretKeyRef"`
 }
 
 type SecretValue struct {
-	SecretKeyRef SecretKeyRef `json:"secretKeyRef"`
+	//*SecretKeyRef `json:"secretKeyRef"`
+	//*string
+	*SecretKeyRefSource `json:"secretKeyRefSource"`
 }
 
 type ExtValues struct {
@@ -181,11 +211,11 @@ type ElasticsearchConfig struct {
 	// Log nodes
 	Nodes []string `json:"nodes"`
 
-	// UserName
-	User SecretValue `json:"user"`
+	// Uername
+	Username string `json:"username,omitempty"`
 
 	// Password
-	Password SecretValue `json:"password"`
+	Password string `json:"password,omitempty"`
 }
 
 type KafkaConfig struct {
@@ -195,12 +225,12 @@ type KafkaConfig struct {
 	// Server address
 	Host string `json:"host"`
 
-	KafkaUser     SecretValue `json:"kafka_user"`
-	KafkaPassword SecretValue `json:"kafka_password"`
+	KafkaUser     string `json:"kafka_user"`
+	KafkaPassword string `json:"kafka_password"`
 
-	ZKUser        SecretValue `json:"zk_user"`
-	ZKPassword    SecretValue `json:"zk_password"`
-	ZKAclPassword SecretValue `json:"zk_acl_password"`
+	ZKUser        string `json:"zk_user"`
+	ZKPassword    string `json:"zk_password"`
+	ZKAclPassword string `json:"zk_acl_password"`
 }
 
 // Repository Config
@@ -253,7 +283,6 @@ type ConfigStatus struct {
 }
 
 // +kubebuilder:object:root=true
-// +kubebuilder:resource:scope=Namespaced
 
 // Config is the Schema for the configs API
 type Config struct {

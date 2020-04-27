@@ -39,9 +39,13 @@ spec:
     isOCP: false
     # Tls Secret
     tlsSecret:
-      secretSource:
-        tls.crt: Cg==
-        tls.key: Cg==
+      secretRefSource:
+        data:
+          tls.crt: Cg==
+          tls.key: Cg==
+        secretRef:
+          secretName: dex.tls
+          hash: xxxx
 
   # OIDC Config
   oidc:
@@ -56,13 +60,21 @@ spec:
     servers:
       - https://etcd.kube-system:2379
     ectdPeerSecret:
-      secretSource:
-        tls.crt: Cg==
-        tls.key: Cg==
+      secretRefSource:
+        data:
+          tls.crt: Cg==
+          tls.key: Cg==
+        secretRef:
+          secretName: etcd-peer
+          hash: xxxx
     ectdCaSecret:
-      secretSource:
-        tls.crt: Cg==
-        tls.key: Cg==
+      secretRefSource:
+        data:
+          tls.crt: Cg==
+          tls.key: Cg==
+        secretRef:
+          secretName: etcd-ca
+          hash: xxxx
 
   # Elasticsearch Config
   elasticsearch:
@@ -71,18 +83,60 @@ spec:
     - 192.168.16.48
     - 192.168.23.1
     - 192.168.23.2
-    username: YWxhdWRhZXM=
-    password: WU9kUHNrUnJGb25wTVJ6
+    user:
+      secretKeyRefSource:
+        value: YWxhdWRhZXM=
+        secretKeyRef:
+          name: acp-config-secret
+          key: ES_USER
+          hash: xxxxx
+    password:
+      secretKeyRefSource:
+        value: WU9kUHNrUnJGb25wTVJ6
+        secretKeyRef:
+          name: acp-config-secret
+          key: ES_PASSWORD
+          hash: xxxxx
 
   # Kafka Config
   kafka:
     auth: true
     host: cpaas-kafka:9092
-    kafka_user: aW1yaWdjemNtbw==
-    kafka_password: dUR2ZVB1bUVFQ1lETXJD
-    zk_user: aW1yaWdjemNtbw==
-    zk_password: dUR2ZVB1bUVFQ1lETXJD
-    zk_acl_password: dUR2ZVB1bUVFQ1lETXJD
+    kafka_user:
+      secretKeyRefSource:
+        value: aW1yaWdjemNtbw==
+        secretKeyRef:
+          name: acp-config-secret
+          key: KAFKA_USER
+          hash: xxxxx
+    kafka_password:
+      secretKeyRefSource:
+        value: dUR2ZVB1bUVFQ1lETXJD
+        secretKeyRef:
+          name: acp-config-secret
+          key: KAFKA_PASSWORD
+          hash: xxxxx
+    zk_user:
+      secretKeyRefSource:
+        value: aW1yaWdjemNtbw==
+        secretKeyRef:
+          name: acp-config-secret
+          key: ZK_USER
+          hash: xxxxx
+    zk_password:
+      secretKeyRefSource:
+        value: dUR2ZVB1bUVFQ1lETXJD
+        secretKeyRef:
+          name: acp-config-secret
+          key: ZK_PASSWORD
+          hash: xxxxx
+    zk_acl_password:
+      secretKeyRefSource:
+        value: dUR2ZVB1bUVFQ1lETXJD
+        secretKeyRef:
+          name: acp-config-secret
+          key: ZK_ACL_PASSWORD
+          hash: xxxxx
 
   # Repositories Config
   repositories:
