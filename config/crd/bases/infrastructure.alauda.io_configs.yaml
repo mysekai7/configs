@@ -62,11 +62,12 @@ spec:
                   description: Etcd Ca Secret
                   properties:
                     secretSource:
-                      description: '*SecretRef `json:"secretRef"`'
                       properties:
                         tls.crt:
+                          format: byte
                           type: string
                         tls.key:
+                          format: byte
                           type: string
                       required:
                       - tls.crt
@@ -79,11 +80,12 @@ spec:
                   description: Etcd Peer secret
                   properties:
                     secretSource:
-                      description: '*SecretRef `json:"secretRef"`'
                       properties:
                         tls.crt:
+                          format: byte
                           type: string
                         tls.key:
+                          format: byte
                           type: string
                       required:
                       - tls.crt
@@ -154,11 +156,12 @@ spec:
                   description: Tls Secret
                   properties:
                     secretSource:
-                      description: '*SecretRef `json:"secretRef"`'
                       properties:
                         tls.crt:
+                          format: byte
                           type: string
                         tls.key:
+                          format: byte
                           type: string
                       required:
                       - tls.crt

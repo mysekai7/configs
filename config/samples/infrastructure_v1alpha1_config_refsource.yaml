@@ -85,14 +85,14 @@ spec:
     - 192.168.23.2
     user:
       secretKeyRefSource:
-        value: YWxhdWRhZXM=
+        value: alaudaes
         secretKeyRef:
           name: acp-config-secret
           key: ES_USER
           hash: xxxxx
     password:
       secretKeyRefSource:
-        value: WU9kUHNrUnJGb25wTVJ6
+        value: YOdPskRrFonpMRz
         secretKeyRef:
           name: acp-config-secret
           key: ES_PASSWORD
@@ -104,35 +104,35 @@ spec:
     host: cpaas-kafka:9092
     kafka_user:
       secretKeyRefSource:
-        value: aW1yaWdjemNtbw==
+        value: imrigczcmo
         secretKeyRef:
           name: acp-config-secret
           key: KAFKA_USER
           hash: xxxxx
     kafka_password:
       secretKeyRefSource:
-        value: dUR2ZVB1bUVFQ1lETXJD
+        value: uDvePumEECYDMrC
         secretKeyRef:
           name: acp-config-secret
           key: KAFKA_PASSWORD
           hash: xxxxx
     zk_user:
       secretKeyRefSource:
-        value: aW1yaWdjemNtbw==
+        value: imrigczcmo
         secretKeyRef:
           name: acp-config-secret
           key: ZK_USER
           hash: xxxxx
     zk_password:
       secretKeyRefSource:
-        value: dUR2ZVB1bUVFQ1lETXJD
+        value: uDvePumEECYDMrC
         secretKeyRef:
           name: acp-config-secret
           key: ZK_PASSWORD
           hash: xxxxx
     zk_acl_password:
       secretKeyRefSource:
-        value: dUR2ZVB1bUVFQ1lETXJD
+        value: uDvePumEECYDMrC
         secretKeyRef:
           name: acp-config-secret
           key: ZK_ACL_PASSWORD

@@ -87,18 +87,18 @@ type SecretRef struct {
 }
 
 type SecretSource struct {
-	Crt string `json:"tls.crt"`
-	Key string `json:"tls.key"`
+	Crt []byte `json:"tls.crt"`
+	Key []byte `json:"tls.key"`
 }
 
 type SecretRefSource struct {
 	Data      SecretSource `json:"data"`
-	secretRef SecretRef    `json:"secretRef"`
+	SecretRef SecretRef    `json:"secretRef"`
 }
 
 type Certificate struct {
+	SecretSource *SecretSource `json:"secretSource"`
 	//*SecretRef `json:"secretRef"`
-	*SecretSource `json:"secretSource"`
 	//*SecretRefSource `json:"secretRefSource"`
 }
 
@@ -116,13 +116,13 @@ type SecretKeyRef struct {
 
 type SecretKeyRefSource struct {
 	Value     string       `json:"value"`
-	secretRef SecretKeyRef `json:"secretKeyRef"`
+	SecretRef SecretKeyRef `json:"secretKeyRef"`
 }
 
 type SecretValue struct {
+	SecretKeyRefSource *SecretKeyRefSource `json:"secretKeyRefSource"`
 	//*SecretKeyRef `json:"secretKeyRef"`
 	//*string
-	*SecretKeyRefSource `json:"secretKeyRefSource"`
 }
 
 type ExtValues struct {

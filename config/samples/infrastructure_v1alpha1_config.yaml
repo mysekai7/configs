@@ -71,18 +71,18 @@ spec:
     - 192.168.16.48
     - 192.168.23.1
     - 192.168.23.2
-    username: YWxhdWRhZXM=
-    password: WU9kUHNrUnJGb25wTVJ6
+    username: alaudaes
+    password: YOdPskRrFonpMRz
 
   # Kafka Config
   kafka:
     auth: true
     host: cpaas-kafka:9092
-    kafka_user: aW1yaWdjemNtbw==
-    kafka_password: dUR2ZVB1bUVFQ1lETXJD
-    zk_user: aW1yaWdjemNtbw==
-    zk_password: dUR2ZVB1bUVFQ1lETXJD
-    zk_acl_password: dUR2ZVB1bUVFQ1lETXJD
+    kafka_user: imrigczcmo
+    kafka_password: uDvePumEECYDMrC
+    zk_user: imrigczcmo
+    zk_password: uDvePumEECYDMrC
+    zk_acl_password: uDvePumEECYDMrC
 
   # Repositories Config
   repositories:
