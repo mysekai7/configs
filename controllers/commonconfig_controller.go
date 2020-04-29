@@ -28,15 +28,15 @@ import (
 	infrastructurev1alpha1 "config/api/v1alpha1"
 )
 
-// ConfigReconciler reconciles a Config object
-type ConfigReconciler struct {
+// CommonConfigReconciler reconciles a CommonConfig object
+type CommonConfigReconciler struct {
 	client.Client
 	Log    logr.Logger
 	Scheme *runtime.Scheme
 }
 
-// +kubebuilder:rbac:groups=infrastructure.alauda.io,resources=configs,verbs=get;list;watch;create;update;patch;delete
-// +kubebuilder:rbac:groups=infrastructure.alauda.io,resources=configs/status,verbs=get;update;patch
+// +kubebuilder:rbac:groups=infrastructure.alauda.io,resources=commonconfigs,verbs=get;list;watch;create;update;patch;delete
+// +kubebuilder:rbac:groups=infrastructure.alauda.io,resources=commonconfigs/status,verbs=get;update;patch
 
 var crt = `-----BEGIN CERTIFICATE-----
 MIIC2DCCAcCgAwIBAgIJAP9cGh+QmGS8MA0GCSqGSIb3DQEBBQUAMBIxEDAOBgNV
@@ -58,12 +58,12 @@ WYKlpw0XEznWQyZ4
 -----END CERTIFICATE-----
 `
 
-func (r *ConfigReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
+func (r *CommonConfigReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	_ = context.Background()
-	_ = r.Log.WithValues("config", req.NamespacedName)
+	_ = r.Log.WithValues("commonconfig", req.NamespacedName)
 
 	// your logic here
-	cfg := infrastructurev1alpha1.Config{}
+	cfg := infrastructurev1alpha1.CommonConfig{}
 	err := r.Get(context.Background(), req.NamespacedName, &cfg)
 	if err != nil {
 		r.Log.Error(err, "get cfg")
@@ -80,8 +80,8 @@ func (r *ConfigReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	return ctrl.Result{}, nil
 }
 
-func (r *ConfigReconciler) SetupWithManager(mgr ctrl.Manager) error {
+func (r *CommonConfigReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
-		For(&infrastructurev1alpha1.Config{}).
+		For(&infrastructurev1alpha1.CommonConfig{}).
 		Complete(r)
 }

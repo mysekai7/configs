@@ -66,12 +66,12 @@ func main() {
 		os.Exit(1)
 	}
 
-	if err = (&controllers.ConfigReconciler{
+	if err = (&controllers.CommonConfigReconciler{
 		Client: mgr.GetClient(),
-		Log:    ctrl.Log.WithName("controllers").WithName("Config"),
+		Log:    ctrl.Log.WithName("controllers").WithName("CommonConfig"),
 		Scheme: mgr.GetScheme(),
 	}).SetupWithManager(mgr); err != nil {
-		setupLog.Error(err, "unable to create controller", "controller", "Config")
+		setupLog.Error(err, "unable to create controller", "controller", "CommonConfig")
 		os.Exit(1)
 	}
 	// +kubebuilder:scaffold:builder

@@ -76,30 +76,13 @@ type GlobalConfig struct {
 	TlsSecret Certificate `json:"tlsSecret"`
 }
 
-type SecretRef struct {
-	// Secret name
-	// +kubebuilder:validation:MinLength:=1
-	SecretName string `json:"secretName"`
-
-	// Hash value
-	// +kubebuilder:validation:MinLength:=1
-	Hash string `json:"hash"`
-}
-
 type SecretSource struct {
 	Crt []byte `json:"tls.crt"`
 	Key []byte `json:"tls.key"`
 }
 
-type SecretRefSource struct {
-	Data      SecretSource `json:"data"`
-	SecretRef SecretRef    `json:"secretRef"`
-}
-
 type Certificate struct {
 	SecretSource *SecretSource `json:"secretSource"`
-	//*SecretRef `json:"secretRef"`
-	//*SecretRefSource `json:"secretRefSource"`
 }
 
 type SecretKeyRef struct {
@@ -112,17 +95,6 @@ type SecretKeyRef struct {
 	// hash value
 	// +kubebuilder:validation:MinLength:=1
 	Hash string `json:"hash,omitempty"`
-}
-
-type SecretKeyRefSource struct {
-	Value     string       `json:"value"`
-	SecretRef SecretKeyRef `json:"secretKeyRef"`
-}
-
-type SecretValue struct {
-	SecretKeyRefSource *SecretKeyRefSource `json:"secretKeyRefSource"`
-	//*SecretKeyRef `json:"secretKeyRef"`
-	//*string
 }
 
 type ExtValues struct {
@@ -243,8 +215,8 @@ type Repository struct {
 	Url string `json:"url"`
 }
 
-// ConfigSpec defines the desired state of Config
-type ConfigSpec struct {
+// CommonConfigSpec defines the desired state of CommonConfig
+type CommonConfigSpec struct {
 	// Release verison
 	// +kubebuilder:validation:MinLength:=1
 	Release string `json:"release"`
@@ -276,32 +248,32 @@ type ConfigSpec struct {
 	Ext ExtValues `json:"ext,omitempty"`
 }
 
-// ConfigStatus defines the observed state of Config
-type ConfigStatus struct {
+// CommonConfigStatus defines the observed state of CommonConfig
+type CommonConfigStatus struct {
 	// INSERT ADDITIONAL STATUS FIELD - define observed state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 }
 
 // +kubebuilder:object:root=true
 
-// Config is the Schema for the configs API
-type Config struct {
+// CommonConfig is the Schema for the commonconfigs API
+type CommonConfig struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
-	Spec   ConfigSpec   `json:"spec,omitempty"`
-	Status ConfigStatus `json:"status,omitempty"`
+	Spec   CommonConfigSpec   `json:"spec,omitempty"`
+	Status CommonConfigStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
 
-// ConfigList contains a list of Config
-type ConfigList struct {
+// CommonConfigList contains a list of CommonConfig
+type CommonConfigList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata,omitempty"`
-	Items           []Config `json:"items"`
+	Items           []CommonConfig `json:"items"`
 }
 
 func init() {
-	SchemeBuilder.Register(&Config{}, &ConfigList{})
+	SchemeBuilder.Register(&CommonConfig{}, &CommonConfigList{})
 }

@@ -1,22 +1,16 @@
-
----
+# permissions for end users to view commonconfigs.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  creationTimestamp: null
-  name: manager-role
+  name: commonconfig-viewer-role
 rules:
 - apiGroups:
   - infrastructure.alauda.io
   resources:
   - commonconfigs
   verbs:
-  - create
-  - delete
   - get
   - list
-  - patch
-  - update
   - watch
 - apiGroups:
   - infrastructure.alauda.io
@@ -24,5 +18,3 @@ rules:
   - commonconfigs/status
   verbs:
   - get
-  - patch
-  - update
